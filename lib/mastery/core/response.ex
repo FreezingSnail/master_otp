@@ -1,4 +1,5 @@
 defmodule Mastery.Core.Response do
+  require Logger
   defstruct ~w[quiz_title template_name to email answer correct timestamp]a
 
   def new(quiz, email, answer) do

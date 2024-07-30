@@ -6,6 +6,7 @@ defmodule QuizBuilder do
     end
   end
 
+  require Logger
   alias Mastery.Core.{Template, Question, Quiz}
 
   def template_fields(overrides \\ []) do
@@ -14,7 +15,7 @@ defmodule QuizBuilder do
         name: :single_digit_addition,
         category: :addition,
         instructions: "Add the numbers",
-        raw: "<=% @left %> + <%= @right %>",
+        raw: "<%= @left %> + <%= @right %>",
         generators: addition_generators(single_digits()),
         checker: &addition_checker/2
       ],
@@ -64,7 +65,7 @@ defmodule QuizBuilder do
     |> Question.new()
   end
 
-  def build_quiz_with_two_templates(quiz_overrides \\ nil) do
+  def build_quiz_with_two_templates(quiz_overrides \\ []) do
     build_quiz(quiz_overrides)
     |> Quiz.add_template(template_fields())
     |> Quiz.add_template(double_digit_addition_template_fields())

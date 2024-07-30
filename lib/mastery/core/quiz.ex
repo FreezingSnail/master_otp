@@ -7,7 +7,7 @@ defmodule Mastery.Core.Quiz do
             mastery: 3,
             templates: %{},
             used: [],
-            current_question: nil,
+            current_question: %Question{},
             last_response: nil,
             record: %{},
             mastered: []
@@ -26,7 +26,7 @@ defmodule Mastery.Core.Quiz do
         &add_to_list_or_nil(&1, template)
       )
 
-    %{quiz | template: templates}
+    %{quiz | templates: templates}
   end
 
   defp add_to_list_or_nil(nil, template), do: [template]
