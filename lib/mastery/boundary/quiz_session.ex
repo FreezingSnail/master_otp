@@ -1,4 +1,4 @@
-defmodule QuizSession do
+defmodule Mastery.Boundary.QuizSession do
   alias Mastery.Core.{Quiz, Response}
   use GenServer
 
@@ -17,7 +17,7 @@ defmodule QuizSession do
 
   @impl true
   def handle_call(:select_question, _from, {quiz, email}) do
-    %Quiz{} = quiz = Quiz.select_question(quiz)
+    quiz = Quiz.select_question(quiz)
     {:reply, quiz.current_question.asked, {quiz, email}}
   end
 
@@ -31,10 +31,10 @@ defmodule QuizSession do
 
   defp maybe_finish(nil, _email), do: {:stop, :normal, :finished, nil}
 
-  defp maybe_finish(quiz = %Quiz{}, email) do
+  defp maybe_finish(quiz, email) do
     {
       :reply,
-      {quiz.current_question, quiz.last_response.correct},
+      {quiz.current_question.asked, quiz.last_response.correct},
       {quiz, email}
     }
   end
