@@ -24,7 +24,8 @@ defmodule Mastery.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Mastery.Application, []}
+      mod: {Mastery.Application, []},
+      extra_applications: [:logger, :wx, :observer, :runtime_tools]
     ]
   end
 

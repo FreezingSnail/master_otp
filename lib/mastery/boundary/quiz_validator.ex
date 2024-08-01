@@ -2,21 +2,18 @@ defmodule Mastery.Boundary.QuizValidator do
   import Mastery.Boundary.Validator
 
   def errors(fields) when is_map(fields) do
-    res =
-      []
-      |> require(fields, :title, &validate_title/1)
-      |> optional(fields, :mastery, &validate_mastery/1)
-
-    IO.inspect(res)
-    res
+    []
+    |> require(fields, :title, &validate_title/1)
+    |> optional(fields, :mastery, &validate_mastery/1)
   end
 
   def errors(_fields), do: [{nil, "A map of fields is required"}]
 
   def validate_title(title) when is_binary(title) do
-    IO.inspect(title)
     check(String.match?(title, ~r{\S}), {:error, "can't be blank"})
   end
+
+  def validate_title(title) when is_atom(title), do: :ok
 
   def validate_title(_title), do: {:error, "must be a string"}
 
